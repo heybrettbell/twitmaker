@@ -5,14 +5,22 @@ class TweetsController < ApplicationController
   end
 
   def create
-    @tweet = Tweet.new(tweet_params)
+      @tweet = Tweet.new(tweet_params)
 
-    if @tweet.save
-      redirect_to tweets_path
-    else
-      render :index
+      if @tweet.save
+        # redirect_to tweets_path
+
+        respond_to do |format|
+          format.html do
+            redirect_to tweets_path
+          end
+
+          format.json { render json: @tweet }
+        end
+      else
+        render :index
+      end
     end
-  end
 
   def destroy
   end
